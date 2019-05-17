@@ -34,10 +34,9 @@ platforms:
       retryable_sleep: 20
       connection_timeout: 300
       connection_retries: 15
-      image_id: ami-074f467fc24cfe533
-#      image_id: ami-04e6d1f5301230502
-      # ami-0f90fdbc56c95764d
-      #   image_id: ami-de81a3a4
+      image_id: ami-04e6d1f5301230502
+        # ami-074f467fc24cfe533  ( already preinstalled with chef, SQL server and user, installer files etc..)
+      # image_id: ami-04e6d1f5301230502  ( chocolatey and problematic KB pre installed)
       user_data: |
         <powershell>
         $logfile=C:\Program Files\Amazon\Ec2ConfigService\Logs\kitchen-ec2.log

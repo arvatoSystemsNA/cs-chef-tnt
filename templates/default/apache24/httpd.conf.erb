@@ -33,22 +33,10 @@ LoadModule socache_memcache_module modules/mod_socache_memcache.so
 LoadModule socache_shmcb_module modules/mod_socache_shmcb.so
 
 # tnt required modules
-LoadModule jk_module modules/mod_jk.so
 LoadModule proxy_balancer_module modules/mod_proxy_balancer.so
 
 # Apache Monitor
 LoadModule status_module modules/mod_status.so
-
-
-<IfModule mpm_worker_module>
-  StartServers          50
-  MinSpareThreads       50
-  MaxSpareThreads       350
-  MaxClients            350
-  ThreadsPerChild       550
-  MaxRequestsPerChild   2056
-</IfModule>
-
 
 <IfModule unixd_module>
 	User daemon
@@ -106,8 +94,6 @@ ExtendedStatus On
 	Require ip ::1
 </Location>
 
-# jk_module for tnt GUI
-Include conf/mod_jk.conf
 
 <IfModule jk_module>
 

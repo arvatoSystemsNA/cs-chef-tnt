@@ -1,0 +1,32 @@
+##
+## ssl.conf -- Apache HTTP server SSL configuration file
+##
+
+SSLRandomSeed startup builtin
+SSLRandomSeed connect builtin
+
+<IfModule mod_mime.c>
+  AddType application/x-x509-ca-cert .crt
+  AddType application/x-pkcs7-crl    .crl
+</IfModule>
+
+SSLPassPhraseDialog  builtin
+
+SSLSessionCache        "shmcb:C:\Apache24\logs\ssl_scache(512000)"
+SSLSessionCacheTimeout 300
+
+
+SSLProtocol all -SSLv2 -SSLv3
+SSLHonorCipherOrder on
+SSLCipherSuite "EECDH+ECDSA+AESGCM EECDH+aRSA+AESGCM EECDH+ECDSA+SHA384 EECDH+ECDSA+SHA256 EECDH+aRSA+SHA384 EECDH+aRSA+SHA256 ECDH+aRSA+RC4 EECDH EDH+aRSA !aNULL !eNULL !LOW !3DES !MD5 !EXP !PSK !SRP !DSS !RC4"
+SSLCompression off
+
+
+
+<FilesMatch "\.(cgi|shtml|phtml|php)$">
+  SSLOptions +StdEnvVars
+</FilesMatch>
+
+<IfModule setenvif_module>
+  BrowserMatch ".*MSIE.*" nokeepalive ssl-unclean-shutdown downgrade-1.0 force-response-1.0
+</IfModule>

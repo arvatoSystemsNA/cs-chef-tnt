@@ -1,0 +1,82 @@
+# OS GENERATED FILES #
+.DS_Store
+ehthumbs.db
+Icon
+Thumbs.db
+
+# INTELLIJ GENERATED FILES #
+.idea/
+*.iml
+*.eml
+
+# ECLIPSE GENERATED FILES #
+RemoteSystemsTempFiles/
+.metadata
+.classpath
+.project
+.settings
+/bin/
+
+# MERGED FILES #
+*.BASE
+*.LOCAL
+*.REMOTE
+*.orig
+
+*~
+*#
+.#*
+\#*#
+.*.sw[a-z]
+*.un~
+# Bundler
+bin/*
+.bundle/*
+archives
+site-cookbooks
+pkg/
+
+# Berkshelf
+.vagrant
+/cookbooks
+Berksfile.lock
+
+# Bundler
+/vendor/bundle
+.bundle/*
+.kitchen/
+.kitchen.local.yml
+syntaxcache/
+syntaxcache/*
+
+# Knife
+/nodes/
+
+# Ruby
+*.rbc
+/.config
+/coverage/
+/InstalledFiles
+/pkg/
+/spec/reports/
+/spec/examples.txt
+/test/tmp/
+/test/version_tmp/
+/tmp/
+
+## Specific to RubyMotion:
+.dat*
+.repl_history
+build/
+
+## Documentation cache and generated files:
+/.yardoc/
+/_yardoc/
+/doc/
+/rdoc/
+
+## Environment normalization:
+/lib/bundler/man/
+# unless supporting rvm < 1.11.0 or doing something fancy, ignore this:
+.rvmrc
+/cookbooks/

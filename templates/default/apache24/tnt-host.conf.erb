@@ -1,0 +1,32 @@
+####### VHOST GLOBAL CONFIGURATION ###############################################################
+
+
+
+####### HTTP #####################################################################################
+
+<VirtualHost 0.0.0.0:80>
+  DocumentRoot "C:\Apache24\htdocs"
+	ServerName   <%= node['apache']['windows']['application_url'] %>
+	ServerAdmin  <%= node['cs']['app']['tnt']['email'] %>
+
+
+	RewriteRule    ^/$.*   /TNT/Login.xhtml  [R,L]
+
+  ##### REWRITE ################################
+  <IfModule rewrite_module>
+
+  RewriteEngine   On
+  LogLevel warn mod_rewrite.c:trace4
+
+  ### HTTP to HTTPS
+  RewriteCond %{HTTPS} !=on
+  RewriteCond  %{REQUEST_URI} !^/server-status.*
+  RewriteRule  ^/(.*)  https://%{HTTP_HOST}/TNT/$1   [R=301,L]
+
+  </IfModule>
+
+  ##### Logging ################################
+  LogFormat "%h %l %u %t \"%r\" %>s %b" common
+	CustomLog "|C:/Apache24/bin/rotatelogs.exe C:/Apache24/logs/vhaccess_tnt_%Y-%m-%d.log 86400" common
+
+</VirtualHost>

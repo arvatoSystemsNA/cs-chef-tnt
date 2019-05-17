@@ -1,0 +1,196 @@
+ServerRoot "c:/Apache24"
+
+
+# principal server
+Listen 80
+
+
+LoadModule allowmethods_module modules/mod_allowmethods.so
+LoadModule authn_core_module modules/mod_authn_core.so
+LoadModule dir_module modules/mod_dir.so
+
+LoadModule authz_groupfile_module modules/mod_authz_groupfile.so
+LoadModule authz_host_module modules/mod_authz_host.so
+
+LoadModule authz_user_module modules/mod_authz_user.so
+LoadModule authz_core_module modules/mod_authz_core.so
+LoadModule env_module modules/mod_env.so
+LoadModule include_module modules/mod_include.so
+LoadModule lbmethod_byrequests_module modules/mod_lbmethod_byrequests.so
+LoadModule log_config_module modules/mod_log_config.so
+LoadModule proxy_module modules/mod_proxy.so
+LoadModule proxy_ajp_module modules/mod_proxy_ajp.so
+LoadModule proxy_http_module modules/mod_proxy_http.so
+LoadModule rewrite_module modules/mod_rewrite.so
+LoadModule setenvif_module modules/mod_setenvif.so
+
+
+LoadModule ssl_module modules/mod_ssl.so
+
+LoadModule slotmem_shm_module modules/mod_slotmem_shm.so
+LoadModule socache_dbm_module modules/mod_socache_dbm.so
+LoadModule socache_memcache_module modules/mod_socache_memcache.so
+LoadModule socache_shmcb_module modules/mod_socache_shmcb.so
+
+# tnt required modules
+LoadModule jk_module modules/mod_jk.so
+LoadModule proxy_balancer_module modules/mod_proxy_balancer.so
+
+# Apache Monitor
+LoadModule status_module modules/mod_status.so
+
+
+<IfModule mpm_worker_module>
+  StartServers          50
+  MinSpareThreads       50
+  MaxSpareThreads       350
+  MaxClients            350
+  ThreadsPerChild       550
+  MaxRequestsPerChild   2056
+</IfModule>
+
+
+<IfModule unixd_module>
+	User daemon
+	Group daemon
+</IfModule>
+
+
+ServerAdmin tnt@arvatosystems.io
+
+DocumentRoot "C:\Apache24\htdocs"
+
+<IfModule dir_module>
+    DirectoryIndex index.html
+</IfModule>
+
+
+ErrorLog "|C:/Apache24/bin/rotatelogs.exe C:/Apache24/logs/error_%Y-%m-%d.log 86400"
+LogLevel <%= node['apache']['windows']['log_level'] %>
+
+<IfModule log_config_module>
+
+    LogFormat "%h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\"" combined
+    LogFormat "%h %l %u %t \"%r\" %>s %b" common
+
+    <IfModule logio_module>
+      # You need to enable mod_logio.c to use %I and %O
+      LogFormat "%h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\" %I %O" combinedio
+    </IfModule>
+
+    CustomLog "|C:/Apache24/bin/rotatelogs.exe C:/Apache24/logs/access_%Y-%m-%d.log 86400" common
+
+</IfModule>
+
+
+<IfModule alias_module>
+    ScriptAlias /cgi-bin/ "C:\Apache24\cgi-bin\"
+</IfModule>
+
+<IfModule mime_module>
+    TypesConfig conf/mime.types
+    AddType application/x-compress .Z
+    AddType application/x-gzip .gz .tgz
+</IfModule>
+
+
+# ExtendedStatus controls whether Apache will generate "full" status
+# information (ExtendedStatus On) or just basic information (ExtendedStatus
+# Off) when the "server-status" handler is called. The default is Off.
+#
+ExtendedStatus On
+
+<Location "/server-status">
+	SetHandler server-status
+	Require ip 127.0.0.1
+	Require ip ::1
+</Location>
+
+# jk_module for tnt GUI
+Include conf/mod_jk.conf
+
+<IfModule jk_module>
+
+	JkMount /TNT TOMCAT1
+	JkMount /TNT/* TOMCAT1
+
+</IfModule>
+
+
+# Virtual hosts
+#Include conf/vhost/tnt-host.conf
+
+
+<VirtualHost 0.0.0.0:80>
+
+	ServerName   <%= node['apache']['windows']['application_url'] %>
+	ServerAdmin  <%= node['cs']['app']['tnt']['email'] %>
+	DocumentRoot "C:\Apache24\htdocs"
+
+	RewriteCond  %{REQUEST_URI} !^/server-status.*
+	RewriteRule    ^/$.*   /TNT/Login.xhtml  [R,L]
+
+	<IfModule rewrite_module>
+	  RewriteEngine   On
+	  LogLevel warn mod_rewrite.c:trace4
+		RewriteCond %{HTTP:X-Forwarded-Proto} =http
+		RewriteRule . https://%{HTTP:Host}%{REQUEST_URI} [L,R=permanent]
+	</IfModule>
+
+	<IfModule jk_module>
+		JkMount /TNT TOMCAT1
+		JkMount /TNT/* TOMCAT1
+	</IfModule>
+
+	##### PROXY  BALANCER Anbindung TNT Server #######################
+  <IfModule mod_proxy_balancer.c>
+
+     ProxyRequests   Off
+     ProxyPreserveHost On
+     ProxyTimeout 1200
+
+    <Proxy balancer://VP>
+	BalancerMember http://127.0.0.1:8082/VP/ loadfactor=1
+    </Proxy>
+    ProxyPass /VP balancer://VP
+
+    <Proxy balancer://VA>
+    BalancerMember http://127.0.0.1:8082/VA/ loadfactor=1
+    </Proxy>
+    ProxyPass /VA balancer://VA
+
+    <Proxy balancer://VS>
+    BalancerMember http://127.0.0.1:8082/VS/ loadfactor=1
+    </Proxy>
+    ProxyPass /VS balancer://VS
+
+    <Proxy balancer://PN>
+    BalancerMember http://127.0.0.1:8082/PN/ loadfactor=1
+    </Proxy>
+    ProxyPass /PN balancer://PN
+
+    <Proxy balancer://GWM>
+    BalancerMember http://127.0.0.1:8082/GWM/ loadfactor=1
+    </Proxy>
+    ProxyPass /GWM balancer://GWM
+
+		<Proxy balancer://LO>
+		BalancerMember http://127.0.0.1:8082/LO/ loadfactor=1
+		</Proxy>
+		ProxyPass /LO balancer://LO
+
+		<Proxy balancer://SO>
+		BalancerMember http://127.0.0.1:8082/SO/ loadfactor=1
+		</Proxy>
+		ProxyPass /SO balancer://SO
+
+  </IfModule>
+
+
+	##### Logging ################################
+	LogFormat "%h %l %u %t \"%r\" %>s %b" common
+	LogLevel <%= node['apache']['windows']['log_level'] %>
+	ErrorLog "C:/Apache24/logs/tnt_vhost_error.log"
+	CustomLog "|C:/Apache24/bin/rotatelogs.exe C:/Apache24/logs/vhaccess_tnt_ws_%Y-%m-%d.log 86400" common
+
+</VirtualHost>

@@ -1,0 +1,124 @@
+---
+driver:
+  name: ec2
+  region: us-east-1
+  availability_zone: us-east-1a
+  # Allows instance to publish to cloudwatch logs
+  iam_profile_name: kitchen-cloudwatch
+  # name of the key/pair to use when creating the instance
+  aws_ssh_key_id: cs-admin-test-kitchen
+  # !! specify in .kitchen.local.yml the "shared_credentials_profile" to use
+  # shared_credentials_profile: cs-admin
+  # see http://www.rubydoc.info/gems/kitchen-ec2/0.10.0#Authenticating_with_AWS for other ways
+  instance_type: m3.medium
+  tags:
+    created-by: test-kitchen-arvato
+    recipe: cs-chef-tnt
+    datadog: ignore
+    Name: ins-cs-tnt-shared-us-east-1a-293808283116
+    triggered-by: <%= ENV['USER'] %>
+
+
+transport:
+ ssh_key: "/home/ubuntu/.ec2/cs-admin-test-kitchen.pem"
+
+provisioner:
+  name: chef_solo
+  data_path: test/shared
+  require_chef_omnibus: 12
+platforms:
+  - name: custom-windows-2012r2
+    driver:
+      name: ec2
+      retryable_tries: 300
+      retryable_sleep: 20
+      connection_timeout: 300
+      connection_retries: 15
+      image_id: ami-074f467fc24cfe533
+#      image_id: ami-04e6d1f5301230502
+      # ami-0f90fdbc56c95764d
+      #   image_id: ami-de81a3a4
+      user_data: |
+        <powershell>
+        $logfile=C:\Program Files\Amazon\Ec2ConfigService\Logs\kitchen-ec2.log
+        # Allow script execution
+        Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Force
+        #PS Remoting and & winrm.cmd basic config
+        Enable-PSRemoting -Force -SkipNetworkProfileCheck
+        & winrm.cmd set winrm/config '@{MaxTimeoutms="1800000"}' >> $logfile
+        & winrm.cmd set winrm/config/winrs '@{MaxMemoryPerShellMB="1024"}' >> $logfile
+        & winrm.cmd set winrm/config/winrs '@{MaxShellsPerUser="50"}' >> $logfile
+        #Server settings - support username/password login
+        & winrm.cmd set winrm/config/service/auth '@{Basic="true"}' >> $logfile
+        & winrm.cmd set winrm/config/service '@{AllowUnencrypted="true"}' >> $logfile
+        & winrm.cmd set winrm/config/winrs '@{MaxMemoryPerShellMB="1024"}' >> $logfile
+        #Firewall Config
+        & netsh advfirewall firewall set rule name="Windows Remote Management (HTTP-In)" profile=public protocol=tcp localport=5985 remoteip=localsubnet new remoteip=any  >> $logfile
+        </powershell>
+    driver_config:
+       log_level: debug
+       block_device_mappings:
+        - device_name: /dev/sda1
+          ebs:
+            volume_size: 50
+            delete_on_termination: true
+        - device_name: /dev/sdh
+          ebs:
+            volume_size: 5
+            delete_on_termination: true
+            volume_type: io1
+            iops: 100
+    transport:
+      name: winrm
+      username: administrator
+      elevated: true
+suites:
+  - name: windows
+    attributes:
+      clamav:
+        enable: false
+      datadog:
+        enable: false
+        api_key: "cde"
+        application_key: "abc"
+      deep_security:
+        skip: true
+        reset: false
+      nessus_agent:
+        skip: true
+      sensu:
+        enable: false
+      cs-chef-cloudwatch:
+        windows_events_log_group: windows-events-log-group-kitchen
+        windows_logs_log_group: windows-log-group-kitchen
+      omnibus_updater:
+        disabled: true
+        prevent_downgrade: false
+      apache:
+        apache-httpd-version: 2.4.28.20171020
+      sql_server:
+#        sql_account: "NT Service\\MSSQL$SQLEXPRESS"
+        sql_account: "NT Service\\MSSQL$SQLEXPRESS"
+        server_sa_password: Password123
+        instance_name: SQLEXPRESS
+        agent_account_pwd: Pass234
+        rs_account_pwd: Pass456
+        np_enabled: true
+        tcp_enabled: true
+      tnt:
+        install_application: true
+      cs:
+        app:
+          tnt:
+            log_folder: "D:\\TNT_CORE\\log"
+            database_endpoint: localhost
+            sql_account: "sa"
+      monitor:
+        transport: snssqs
+        snssqs_publishing_sns_topic_arn: "arn:aws:sns:us-east-1:293808283116:test-topic"
+        snsqs_region: "us-east-1"
+
+    run_list:
+      - recipe[cs-chef-base-wrapper]
+      - recipe[sql_server::server]
+      - recipe[cs-chef-tnt]

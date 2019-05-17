@@ -1,0 +1,101 @@
+
+-- 
+-- 
+-- 
+-- 
+-- 
+
+
+USE [master]
+GO
+
+-- Get the SQL Server data path.
+DECLARE @data_path nvarchar(256);
+SET @data_path = (SELECT SUBSTRING(physical_name, 1, CHARINDEX(N'master.mdf', LOWER(physical_name)) - 1)
+                  FROM master.sys.master_files
+                  WHERE database_id = 1 AND file_id = 1);
+
+
+
+EXECUTE ('CREATE DATABASE <%= @db_name%>
+
+  ON
+    (
+    NAME = <%= @db_name%>_data
+    ,FILENAME = ''' + @data_path + '<%= @db_name%>_data.mdf''
+    <% if @data_file_size%>
+    ,SIZE = <%= @data_file_size%>,
+    <% end %>
+    <% if @data_max_file_size%>
+    ,MAXSIZE = <%= @data_max_file_size%>
+    <% end %>
+    <% if @data_file_growth%>
+    ,FILEGROWTH = <%= @data_file_growth%>
+    <% end %>
+    )
+
+  LOG ON
+    (
+    NAME = <%= @db_name%>_log
+    ,FILENAME = ''' + @data_path + '<%= @db_name%>_log.ldf''
+    <% if @log_file_size%>
+    ,SIZE = <%= @log_file_size%>,
+    <% end %>
+    <% if @log_max_file_size%>
+    ,MAXSIZE = <%= @log_max_file_size%>
+    <% end %>
+    <% if @log_file_growth%>
+    ,FILEGROWTH = <%= @log_file_growth%>
+    <% end %>
+    )
+
+  COLLATE Latin1_General_CI_AS'
+);
+GO
+
+
+-- ALTER DATABASE <%= @db_name%>
+--   SET READ_COMMITTED_SNAPSHOT
+--   ON WITH NO_WAIT;
+-- GO
+
+
+USE [<%= @db_name%>];
+GO
+CREATE USER [<%= @db_username%>] FOR LOGIN [<%= @db_username%>]
+GO
+
+ALTER USER [<%= @db_username%>] WITH DEFAULT_SCHEMA=dbo
+GO
+
+
+
+USE [<%= @db_name%>];
+GO
+GRANT CONNECT TO [<%= @db_username%>];
+GO
+
+USE [<%= @db_name%>]
+GO
+ALTER ROLE [db_accessadmin] ADD MEMBER [<%= @db_username%>]
+GO
+
+USE [<%= @db_name%>]
+GO
+ALTER ROLE [db_datareader] ADD MEMBER [<%= @db_username%>]
+GO
+
+USE [<%= @db_name%>]
+GO
+ALTER ROLE [db_datawriter] ADD MEMBER [<%= @db_username%>]
+GO
+
+USE [<%= @db_name%>]
+GO
+ALTER ROLE [db_ddladmin] ADD MEMBER [<%= @db_username%>]
+GO
+
+USE [<%= @db_name%>]
+GO
+ALTER ROLE [db_owner] ADD MEMBER [<%= @db_username%>]
+GO

@@ -1,0 +1,69 @@
+
+-- docs.microsoft.com/en-us/sql/t-sql/statements/alter-login-transact-sql
+
+-- ----------------------
+-- DATABASE tnt
+-- ----------------------
+
+CREATE LOGIN tnt
+    WITH PASSWORD = '<%= @decrypted_tnt_pwd %>';
+GO
+
+ALTER LOGIN tnt
+    WITH CHECK_EXPIRATION = OFF;
+GO
+
+ALTER LOGIN tnt
+    WITH CHECK_POLICY = OFF;
+GO
+
+
+
+-- ----------------------
+-- DATABASE keycloak
+-- ----------------------
+
+CREATE LOGIN keycloak
+    WITH PASSWORD = '<%= @decrypted_keycloak_pwd%>';
+GO
+
+ALTER LOGIN keycloak
+    WITH CHECK_EXPIRATION = OFF;
+GO
+
+ALTER LOGIN keycloak
+    WITH CHECK_POLICY = OFF;
+GO
+
+
+-- ----------------------
+-- DATABASE epcat
+-- ----------------------
+
+    CREATE LOGIN epcat
+        WITH PASSWORD = '<%= @decrypted_epcat_pwd%>';
+    GO
+
+    ALTER LOGIN epcat
+        WITH CHECK_EXPIRATION = OFF;
+    GO
+
+    ALTER LOGIN epcat
+        WITH CHECK_POLICY = OFF;
+    GO
+
+-- ----------------------
+-- OTHER LOGINS
+-- ----------------------
+
+CREATE LOGIN sa
+    WITH PASSWORD = '<%= @decrypted_sa_pwd %>';
+GO
+
+ALTER LOGIN sa
+    WITH CHECK_EXPIRATION = OFF;
+GO
+
+ALTER LOGIN sa
+    WITH CHECK_POLICY = OFF;
+GO

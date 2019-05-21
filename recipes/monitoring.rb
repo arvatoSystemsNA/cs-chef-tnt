@@ -8,7 +8,7 @@
 #
 
 
-edit_resource!(:sensu_gem , 'ohai') do
+edit_resource!(:gem_package , 'ohai') do
   version '14.8.10'
 end
 

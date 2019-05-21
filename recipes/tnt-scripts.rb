@@ -51,7 +51,7 @@ end
 
 template node['cs']['app']['tnt']['files'] + "/sql/V1_logins-create.sql" do
   source 'apache24/sqlv2/V1_logins-create.sql.erb'
-  sensitive false
+  sensitive true
   variables lazy {
     {
         decrypted_master_pwd: node.run_state['decrypted_master_pwd'],
@@ -65,7 +65,7 @@ end
 
 template node['cs']['app']['tnt']['files'] + "/sql/V2_database-tnt.sql" do
   source 'apache24/sqlv2/database.sql.erb'
-  sensitive false
+  sensitive true
   variables(
       data_file_size: node['tnt']['tnt_db_data_file_size'],
       data_max_file_size: node['tnt']['tnt_db_data_max_file_size'],
@@ -81,7 +81,7 @@ end
 
 template node['cs']['app']['tnt']['files'] + "/sql/V3_database-epcat.sql" do
   source 'apache24/sqlv2/database.sql.erb'
-  sensitive false
+  sensitive true
   variables(
       data_file_size: node['tnt']['epcat_db_data_file_size'],
       data_max_file_size: node['tnt']['epcat_db_data_max_file_size'],
@@ -97,7 +97,7 @@ end
 
 template node['cs']['app']['tnt']['files'] + "/sql/V4_database-keycloak.sql" do
   source 'apache24/sqlv2/database.sql.erb'
-  sensitive false
+  sensitive true
   variables(
         data_file_size: node['tnt']['keycloak_db_data_file_size'],
         data_max_file_size: node['tnt']['keycloak_db_data_max_file_size'],
@@ -129,7 +129,7 @@ execute 'Execute SQL scripts' do
 
   sqlcmdPath = node['sql_server']['sqlcmd_path']
 
-  sensitive false
+  sensitive true
   environment lazy {
     {
         SQLCMDPASSWORD: node.run_state['decrypted_master_pwd']

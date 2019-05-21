@@ -8,9 +8,6 @@
 #
 
 
-edit_resource!(:gem_package , 'ohai') do
-  version '14.8.10'
-end
 
 sensu_gem 'sensu-plugins-http' do
   version '1.0.0'

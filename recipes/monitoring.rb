@@ -7,6 +7,11 @@
 # All rights reserved - Do Not Redistribute
 #
 
+
+edit_resource!(:sensu_gem , 'ohai') do
+  version '14.8.10'
+end
+
 sensu_gem 'sensu-plugins-http' do
   version '1.0.0'
 end

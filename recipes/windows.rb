@@ -22,10 +22,3 @@ include_recipe 'cs-chef-tnt::apache24' if node['tnt']['install_apache']
 
 include_recipe 'cs-chef-tnt::monitoring' if node['tnt']['install_monitoring'] && node['sensu']['enable']
 
-if  node['sensu']['enable']
-
-  edit_resource!(:gem_package , 'ohai') do
-    version '14.8.10'
-  end
-
-end

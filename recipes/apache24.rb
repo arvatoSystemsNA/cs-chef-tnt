@@ -40,12 +40,14 @@ end
 template node['apache']['windows']['extra']['vhosts']['dir'].to_str + "/tnt-host.conf" do
   source 'apache24/tnt-host.conf.erb'
   action :create
+  notifies :restart,  "service[Apache2.4]", :delayed
 end
 
 template node['apache']['windows']['conf'].to_str do
   source 'apache24/httpd.conf.erb'
   action :create
   backup false
+  notifies :restart,  "service[Apache2.4]", :delayed
 end
 
 # Start apache service

@@ -29,52 +29,88 @@ sensu_check 'apache2.4' do
   )
 end
 
-# sensu_check 'tnt_core' do
-#   command 'check-windows-service.rb.bat -s tnt_core'
-#   handlers ['default']
-#   interval node['monitor']['default_interval']
-#   subscribers ['os:windows'] unless node['monitor']['standalone_mode']
-#   standalone true if node['monitor']['standalone_mode']
-#   additional(
-#       occurrences: node['monitor']['default_occurrences'],
-#       refresh: node['monitor']['default_refresh']
-#   )
-# end
-#
-#
-# sensu_check 'tnt_gui' do
-#   command 'check-windows-service.rb.bat -s tnt_gui'
-#   handlers ['default']
-#   interval node['monitor']['default_interval']
-#   subscribers ['os:windows'] unless node['monitor']['standalone_mode']
-#   standalone true if node['monitor']['standalone_mode']
-#   additional(
-#       occurrences: node['monitor']['default_occurrences'],
-#       refresh: node['monitor']['default_refresh']
-#   )
-# end
-#
-#
-# sensu_check 'tnt_url' do
-#   command "check-http.rb.bat -u http://127.0.0.1/TNT/Login.xhtml"
-#   handlers ['default']
-#   subscribers ['os:windows'] unless node['monitor']['standalone_mode']
-#   standalone true if node['monitor']['standalone_mode']
-#   interval node['monitor']['default_interval']
-#   additional(
-#       occurrences: node['monitor']['default_occurrences']
-#   )
-# end
-#
-# sensu_check 'apache_metrics' do
-#   type 'metric'
-#   command 'metrics-apache-graphite.rb.bat -h 127.0.0.1 --scheme :::scheme_prefix::::::name:::.apache'
-#   handlers ['metrics']
-#   subscribers ['os:windows'] unless node['monitor']['standalone_mode']
-#   standalone true if node['monitor']['standalone_mode']
-#   interval node['monitor']['metric_interval']
-#   additional(
-#       occurrences: node['monitor']['metric_occurrences']
-#   )
-# end
+sensu_check 'TNT_CM' do
+  command 'check-windows-service.rb.bat -s TNT_CM'
+  handlers ['default']
+  interval node['monitor']['default_interval']
+  subscribers ['os:windows'] unless node['monitor']['standalone_mode']
+  standalone true if node['monitor']['standalone_mode']
+  additional(
+      occurrences: node['monitor']['default_occurrences'],
+      refresh: node['monitor']['default_refresh']
+  )
+end
+
+sensu_check 'TNT_EPCAT' do
+  command 'check-windows-service.rb.bat -s TNT_EPCAT'
+  handlers ['default']
+  interval node['monitor']['default_interval']
+  subscribers ['os:windows'] unless node['monitor']['standalone_mode']
+  standalone true if node['monitor']['standalone_mode']
+  additional(
+      occurrences: node['monitor']['default_occurrences'],
+      refresh: node['monitor']['default_refresh']
+  )
+end
+
+sensu_check 'TNT_INFO' do
+  command 'check-windows-service.rb.bat -s TNT_INFO'
+  handlers ['default']
+  interval node['monitor']['default_interval']
+  subscribers ['os:windows'] unless node['monitor']['standalone_mode']
+  standalone true if node['monitor']['standalone_mode']
+  additional(
+      occurrences: node['monitor']['default_occurrences'],
+      refresh: node['monitor']['default_refresh']
+  )
+end
+
+sensu_check 'TNT_CORE' do
+  command 'check-windows-service.rb.bat -s TNT_CORE'
+  handlers ['default']
+  interval node['monitor']['default_interval']
+  subscribers ['os:windows'] unless node['monitor']['standalone_mode']
+  standalone true if node['monitor']['standalone_mode']
+  additional(
+      occurrences: node['monitor']['default_occurrences'],
+      refresh: node['monitor']['default_refresh']
+  )
+end
+
+sensu_check 'TNT_GUI' do
+  command 'check-windows-service.rb.bat -s TNT_GUI'
+  handlers ['default']
+  interval node['monitor']['default_interval']
+  subscribers ['os:windows'] unless node['monitor']['standalone_mode']
+  standalone true if node['monitor']['standalone_mode']
+  additional(
+      occurrences: node['monitor']['default_occurrences'],
+      refresh: node['monitor']['default_refresh']
+  )
+end
+
+sensu_check 'TNT_API' do
+  command 'check-windows-service.rb.bat -s TNT_API'
+  handlers ['default']
+  interval node['monitor']['default_interval']
+  subscribers ['os:windows'] unless node['monitor']['standalone_mode']
+  standalone true if node['monitor']['standalone_mode']
+  additional(
+      occurrences: node['monitor']['default_occurrences'],
+      refresh: node['monitor']['default_refresh']
+  )
+end
+
+
+sensu_check 'tnt_url' do
+  command "check-http.rb.bat -u http://localhost/tnt"
+  handlers ['default']
+  subscribers ['os:windows'] unless node['monitor']['standalone_mode']
+  standalone true if node['monitor']['standalone_mode']
+  interval node['monitor']['default_interval']
+  additional(
+      occurrences: node['monitor']['default_occurrences']
+  )
+end
+
 

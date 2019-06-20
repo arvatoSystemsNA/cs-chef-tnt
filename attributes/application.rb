@@ -76,84 +76,47 @@ default['cloudwatchlog']['windows']['streams']['cm']={
 }
 
 
-
-
-
-default['cloudwatchlog']['windows']['logs']['tnt_gui_info']={
-    :Id => 'TntGuiInfo',
+default['cloudwatchlog']['windows']['logs']['tnt_gui']={
+    :Id => 'TntGui',
     :FullName => 'AWS.EC2.Windows.CloudWatch.CustomLog.CustomLogInputComponent,AWS.EC2.Windows.CloudWatch',
     :Parameters => {
         :LogDirectoryPath => node['cs']['app']['tnt']['tnt_log_folder'],
         :TimestampFormat => 'yyyy-MM-dd HH:mm:ss,fff',
         :Encoding => 'UTF-8',
-        :Filter => 'csdb-tnt-webgui-procrun-stdout*.log',
+        :Filter => 'csdb-tnt-webgui.log',
         :TimeZoneKind=> 'UTC'
     }
 }
 
-default['cloudwatchlog']['windows']['logs']['tnt_gui_stderr']={
-    :Id => 'TntGuiStderr',
-    :FullName => 'AWS.EC2.Windows.CloudWatch.CustomLog.CustomLogInputComponent,AWS.EC2.Windows.CloudWatch',
-    :Parameters => {
-        :LogDirectoryPath => node['cs']['app']['tnt']['tnt_log_folder'],
-        :TimestampFormat => 'yyyy-MM-dd HH:mm:ss',
-        :Encoding => 'UTF-8',
-        :Filter => 'csdb-tnt-webgui-procrun-stderr*.log',
-        :TimeZoneKind=> 'UTC'
-    }
-}
-
-default['cloudwatchlog']['windows']['logs']['tnt_core_info']={
-    :Id => 'TntCoreInfo',
+default['cloudwatchlog']['windows']['logs']['tnt_core']={
+    :Id => 'TntCore',
     :FullName => 'AWS.EC2.Windows.CloudWatch.CustomLog.CustomLogInputComponent,AWS.EC2.Windows.CloudWatch',
     :Parameters => {
         :LogDirectoryPath => node['cs']['app']['tnt']['tnt_log_folder'],
         :TimestampFormat => 'yyyy-MM-dd HH:mm:ss,fff',
         :Encoding => 'UTF-8',
-        :Filter => 'csdb-tnt-core-procrun-stdout*.log',
+        :Filter => 'csdb-tnt-core.log',
         :TimeZoneKind=> 'UTC'
     }
 }
 
-default['cloudwatchlog']['windows']['logs']['tnt_core_error']={
-    :Id => 'TntCoreStderr',
-    :FullName => 'AWS.EC2.Windows.CloudWatch.CustomLog.CustomLogInputComponent,AWS.EC2.Windows.CloudWatch',
-    :Parameters => {
-        :LogDirectoryPath => node['cs']['app']['tnt']['tnt_log_folder'],
-        :TimestampFormat => 'yyyy-MM-dd HH:mm:ss',
-        :Encoding => 'UTF-8',
-        :Filter => 'csdb-tnt-core-procrun-stderr*.log',
-        :TimeZoneKind=> 'UTC'
-    }
-}
 
-default['cloudwatchlog']['windows']['logs']['tnt_api_info']={
-    :Id => 'TntApiInfo',
+default['cloudwatchlog']['windows']['logs']['tnt_api']={
+    :Id => 'TntApi',
     :FullName => 'AWS.EC2.Windows.CloudWatch.CustomLog.CustomLogInputComponent,AWS.EC2.Windows.CloudWatch',
     :Parameters => {
         :LogDirectoryPath => node['cs']['app']['tnt']['tnt_log_folder'],
         :TimestampFormat => 'yyyy-MM-dd HH:mm:ss,fff',
         :Encoding => 'UTF-8',
-        :Filter => 'csdb-tnt-api-procrun-stdout*.log',
+        :Filter => 'csdb-tnt-api.log',
         :TimeZoneKind=> 'UTC'
     }
 }
 
-default['cloudwatchlog']['windows']['logs']['tnt_api_error']={
-    :Id => 'TntApiStderr',
-    :FullName => 'AWS.EC2.Windows.CloudWatch.CustomLog.CustomLogInputComponent,AWS.EC2.Windows.CloudWatch',
-    :Parameters => {
-        :LogDirectoryPath => node['cs']['app']['tnt']['tnt_log_folder'],
-        :TimestampFormat => 'yyyy-MM-dd HH:mm:ss',
-        :Encoding => 'UTF-8',
-        :Filter => 'csdb-tnt-api-procrun-stderr*.log',
-        :TimeZoneKind=> 'UTC'
-    }
-}
 
 
 default['cloudwatchlog']['windows']['logs']['tnt_infosys_info']={
-    :Id => 'TntInfoSysInfo',
+    :Id => 'TntInfoSys',
     :FullName => 'AWS.EC2.Windows.CloudWatch.CustomLog.CustomLogInputComponent,AWS.EC2.Windows.CloudWatch',
     :Parameters => {
         :LogDirectoryPath => node['cs']['app']['tnt']['tnt_log_folder'],
@@ -164,24 +127,12 @@ default['cloudwatchlog']['windows']['logs']['tnt_infosys_info']={
     }
 }
 
-default['cloudwatchlog']['windows']['logs']['tnt_infosys_error']={
-    :Id => 'TntInfoSysStderr',
-    :FullName => 'AWS.EC2.Windows.CloudWatch.CustomLog.CustomLogInputComponent,AWS.EC2.Windows.CloudWatch',
-    :Parameters => {
-        :LogDirectoryPath => node['cs']['app']['tnt']['tnt_log_folder'],
-        :TimestampFormat => 'yyyy-MM-dd HH:mm:ss',
-        :Encoding => 'UTF-8',
-        :Filter => 'csdb-tnt-infosystem-procrun-stderr*.log',
-        :TimeZoneKind=> 'UTC'
-    }
-}
-
 default['cloudwatchlog']['windows']['logs']['tnt_epcat_info']={
     :Id => 'TntEpcatInfo',
     :FullName => 'AWS.EC2.Windows.CloudWatch.CustomLog.CustomLogInputComponent,AWS.EC2.Windows.CloudWatch',
     :Parameters => {
         :LogDirectoryPath => node['cs']['app']['tnt']['tnt_log_folder'],
-        :TimestampFormat => 'yyyy-MM-dd HH:mm:ss,fff',
+        :TimestampFormat => 'yyyy-MM-dd HH:mm:ss.fff',
         :Encoding => 'UTF-8',
         :Filter => 'csdb-tnt-epcat-procrun-stdout*.log',
         :TimeZoneKind=> 'UTC'
@@ -193,7 +144,7 @@ default['cloudwatchlog']['windows']['logs']['tnt_epcat_error']={
     :FullName => 'AWS.EC2.Windows.CloudWatch.CustomLog.CustomLogInputComponent,AWS.EC2.Windows.CloudWatch',
     :Parameters => {
         :LogDirectoryPath => node['cs']['app']['tnt']['tnt_log_folder'],
-        :TimestampFormat => 'yyyy-MM-dd HH:mm:ss',
+        :TimestampFormat => 'yyyy-MM-dd HH:mm:ss.fff',
         :Encoding => 'UTF-8',
         :Filter => 'csdb-tnt-epcat-procrun-stderr*.log',
         :TimeZoneKind=> 'UTC'
@@ -237,19 +188,19 @@ default['cloudwatchlog']['windows']['logs']['tnt_cm_server']={
 }
 
 default['cloudwatchlog']['windows']['streamflows']['tnt_core'] = {
-    :logs => %w(TntCoreInfo TntCoreStderr),
+    :logs => %w(TntCoreInfo),
     :streams => ['CloudWatchLogs-Logs-TntCore']}
 
 default['cloudwatchlog']['windows']['streamflows']['tnt_gui'] = {
-    :logs => %w(TntGuiInfo TntGuiStderr),
+    :logs => %w(TntGui),
     :streams => ['CloudWatchLogs-Logs-TntGui']}
 
 default['cloudwatchlog']['windows']['streamflows']['tnt_api'] = {
-    :logs => %w(TntApiInfo TntApiStderr),
+    :logs => %w(TntApi),
     :streams => ['CloudWatchLogs-Logs-TntApi']}
 
 default['cloudwatchlog']['windows']['streamflows']['tnt_infosystem'] = {
-    :logs => %w(TntInfoSysInfo TntInfoSysStderr),
+    :logs => %w(TntInfoSys),
     :streams => ['CloudWatchLogs-Logs-TntInfoSys']}
 
 default['cloudwatchlog']['windows']['streamflows']['tnt_epcat'] = {

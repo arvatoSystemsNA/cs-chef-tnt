@@ -1,7 +1,7 @@
 name             'cs-chef-tnt'
 license          'All rights reserved'
 description      'Installs/Configures cs-chef-tnt'
-version          '0.1.8'
+version          '0.1.9'
 
 depends 'chocolatey', '~> 1.2.0'
 depends 'powershell'

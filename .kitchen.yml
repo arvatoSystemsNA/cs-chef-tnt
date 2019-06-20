@@ -34,7 +34,7 @@ platforms:
       retryable_sleep: 20
       connection_timeout: 300
       connection_retries: 15
-      image_id: ami-074f467fc24cfe533
+      image_id: ami-01fe427a1c15d7c9f
         # ami-074f467fc24cfe533  ( already preinstalled with chef, SQL server and user, installer files etc..)
       # ami-01fe427a1c15d7c9f  ( TNT services installed )
       # image_id: ami-04e6d1f5301230502  ( chocolatey and problematic KB pre installed)
@@ -110,7 +110,7 @@ suites:
       cs:
         app:
           tnt:
-            log_folder: "D:\\TNT_CORE\\log"
+            tnt_log_folder: "D:\\TNT_APP\\logs"
             database_endpoint: localhost
             sql_account: "sa"
       monitor:

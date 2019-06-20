@@ -182,13 +182,13 @@ default['cloudwatchlog']['windows']['logs']['tnt_cm_server']={
         :LogDirectoryPath => node['cs']['app']['tnt']['cm_log_folder'],
         :TimestampFormat => 'yyyy-MM-dd HH:mm:ss,fff',
         :Encoding => 'UTF-8',
-        :Filter => 'server.log*',
+        :Filter => 'server.log',
         :TimeZoneKind=> 'UTC'
     }
 }
 
 default['cloudwatchlog']['windows']['streamflows']['tnt_core'] = {
-    :logs => %w(TntCoreInfo),
+    :logs => %w(TntCore),
     :streams => ['CloudWatchLogs-Logs-TntCore']}
 
 default['cloudwatchlog']['windows']['streamflows']['tnt_gui'] = {

@@ -52,7 +52,7 @@ default['cloudwatchlog']['windows']['streams']['tnt_core']={
 }
 
 default['cloudwatchlog']['windows']['streams']['tnt_infosystem']={
-    :id => 'CloudWatchLogs-Logs-TntInfo',
+    :id => 'CloudWatchLogs-Logs-TntInfoSys',
     :region=> 'us-east-1',
     :suffix => "tntinfo"
 }

@@ -114,7 +114,7 @@ sensu_check 'tnt_url' do
 end
 
 sensu_check 'tnt_cm_url' do
-  command "check-http.rb.bat -u http://localhost/auth"
+  command "check-http.rb.bat -u http://localhost/auth --response-code 303 -r"
   handlers ['default']
   subscribers ['os:windows'] unless node['monitor']['standalone_mode']
   standalone true if node['monitor']['standalone_mode']

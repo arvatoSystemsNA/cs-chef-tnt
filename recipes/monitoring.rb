@@ -103,7 +103,18 @@ end
 
 
 sensu_check 'tnt_url' do
-  command "check-http.rb.bat -u http://localhost/tnt"
+  command "check-http.rb.bat -u http://localhost/tnt --response-code 302 -r"
+  handlers ['default']
+  subscribers ['os:windows'] unless node['monitor']['standalone_mode']
+  standalone true if node['monitor']['standalone_mode']
+  interval node['monitor']['default_interval']
+  additional(
+      occurrences: node['monitor']['default_occurrences']
+  )
+end
+
+sensu_check 'tnt_cm_url' do
+  command "check-http.rb.bat -u http://localhost/auth"
   handlers ['default']
   subscribers ['os:windows'] unless node['monitor']['standalone_mode']
   standalone true if node['monitor']['standalone_mode']

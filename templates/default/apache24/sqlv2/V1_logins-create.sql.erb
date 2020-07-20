@@ -18,24 +18,6 @@ ALTER LOGIN tnt
 GO
 
 
-
--- ----------------------
--- DATABASE keycloak
--- ----------------------
-
-CREATE LOGIN keycloak
-    WITH PASSWORD = '<%= @decrypted_keycloak_pwd%>';
-GO
-
-ALTER LOGIN keycloak
-    WITH CHECK_EXPIRATION = OFF;
-GO
-
-ALTER LOGIN keycloak
-    WITH CHECK_POLICY = OFF;
-GO
-
-
 -- ----------------------
 -- DATABASE epcat
 -- ----------------------

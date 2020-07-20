@@ -14,8 +14,5 @@ REM Creating tnt table
 REM Creating epcat table
 %SQLCMD% -U %USER% -S %DATABASE% -i %PATH%\V3_database-epcat.sql
 
-REM Creating keycloak table
-%SQLCMD% -U %USER% -S %DATABASE% -i %PATH%\V4_database-keycloak.sql
-
 REM Creating tempdb table
 REM %SQLCMD% -U %USER% -S %DATABASE% -i %PATH%\V5_database-tempdb.sql

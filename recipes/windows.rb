@@ -16,7 +16,7 @@ include_recipe 'cs-chef-tnt::packages' if node['tnt']['install_packages']
 
 include_recipe 'cs-chef-tnt::sql-server' if node['tnt']['install_sqlutils']
 
-include_recipe 'cs-chef-tnt::application' if node['tnt']['install_application']
+include_recipe 'cs-chef-tnt::application' if node['tnt']['install_application'] || node['cs']['app']['java']['install_java'] || node['tnt']['create_databases']
 
 include_recipe 'cs-chef-tnt::apache24' if node['tnt']['install_apache']
 

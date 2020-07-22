@@ -9,6 +9,7 @@
 default['tnt']['install_packages'] = true
 
 default['tnt']['install_application'] = false
+default['tnt']['create_databases']= false
 default['tnt']['install_apache'] = true
 default['tnt']['install_monitoring'] = true
 default['tnt']['install_security-packages'] = true

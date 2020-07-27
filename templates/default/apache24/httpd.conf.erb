@@ -109,15 +109,11 @@ ExtendedStatus On
 	DocumentRoot "C:\Apache24\htdocs"
 
 	RewriteCond  %{REQUEST_URI} !^/server-status.*
-	RewriteRule    ^/$.*   /tnt  [R,L]
+	RewriteRule    ^/$.*   /tt  [R,L]
 
 	ProxyPreserveHost On
-	ProxyPass /auth http://localhost:9000/auth
-	ProxyPassReverse /auth http://localhost:9000/auth
-	ProxyPass /tnt http://localhost:8080/tnt
-	ProxyPassReverse /tnt http://localhost:8080/tnt
-	ProxyPass /api http://localhost:8990/api
-	ProxyPassReverse /api http://localhost:8990/api
+	ProxyPass /tt http://localhost:9080/tt
+	ProxyPassReverse /tt http://localhost:9080/tt
 
 	<IfModule rewrite_module>
 	  RewriteEngine   On

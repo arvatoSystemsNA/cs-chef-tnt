@@ -26,6 +26,7 @@ cookbook 'nessus-agent', "~> 1.0.3",  path: "../.chef/cookbooks/nessus-agent"
 cookbook 'cs-chef-sensu-wrapper', "~> 0.1.0", path: "../.chef/cookbooks/cs-chef-sensu-wrapper"
 cookbook 'cs-chef-logstash-forwarder', "~> 0.1.0", path: "../.chef/cookbooks/cs-chef-logstash-forwarder"
 cookbook 'monitor', git: 'https://github.com/arvatoaws/chef-monitor.git'
+cookbook 'dpkg_autostart', '=0.4.0'
 
 
 

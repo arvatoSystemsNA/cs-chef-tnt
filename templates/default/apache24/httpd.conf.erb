@@ -83,6 +83,9 @@ LogLevel <%= node['apache']['windows']['log_level'] %>
     AddType application/x-gzip .gz .tgz
 </IfModule>
 
+<IfModule headers_module>
+	Header always edit Access-Control-Expose-Headers "*"
+</IfModule>
 
 # ExtendedStatus controls whether Apache will generate "full" status
 # information (ExtendedStatus On) or just basic information (ExtendedStatus

@@ -1,7 +1,7 @@
 name             'cs-chef-tnt'
 license          'All rights reserved'
 description      'Installs/Configures cs-chef-tnt'
-version          '0.1.16'
+version          '0.1.17'
 
 depends 'chocolatey', '~> 1.2.0'
 depends 'powershell'
@@ -10,3 +10,4 @@ depends 'aws'
 depends 'sql_server'
 depends 'monitor'
 depends 'windows' , '< 5.0.0'
+depends 'dpkg_autostart', '=0.4.0'

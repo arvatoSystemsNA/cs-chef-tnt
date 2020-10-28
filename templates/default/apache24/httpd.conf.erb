@@ -84,7 +84,7 @@ LogLevel <%= node['apache']['windows']['log_level'] %>
 </IfModule>
 
 <IfModule headers_module>
-	Header always edit Access-Control-Expose-Headers "*"
+	Header set Access-Control-Expose-Headers "*"
 </IfModule>
 
 # ExtendedStatus controls whether Apache will generate "full" status

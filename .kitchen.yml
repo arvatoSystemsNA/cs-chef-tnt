@@ -88,6 +88,8 @@ suites:
         skip: true
       sensu:
         enable: false
+      sensu_go:
+        enable: true
       cs-chef-cloudwatch:
         windows_events_log_group: windows-events-log-group-kitchen
         windows_logs_log_group: windows-log-group-kitchen

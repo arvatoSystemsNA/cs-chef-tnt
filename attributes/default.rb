@@ -7,3 +7,4 @@
 # All rights reserved - Do Not Redistribute
 #
 default['datadog']['agent_enable'] = false
+default['sensu_go']['additional_subscriptions'] = ['tnt']
